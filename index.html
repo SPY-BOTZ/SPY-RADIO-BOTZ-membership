@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPY RADIO BOTZ - Premium Membership</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .btn-nav:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .plan-card.popular {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .plan-price {
+            font-size: 42px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .plan-duration {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .plan-features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-select {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-select:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .free-trial {
+            background: #f0f4ff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .free-trial h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .free-trial p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn-free-trial {
+            padding: 12px 40px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-free-trial:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+            border: none;
+            background: none;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+        }
+
+        .otp-section {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .otp-section.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .payment-modal {
+            text-align: center;
+        }
+
+        .payment-amount {
+            font-size: 48px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .demo-data {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .demo-data p {
+            color: #1565c0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.popular {
+                transform: scale(1);
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">🎙️ SPY RADIO BOTZ</div>
+        <div class="nav-buttons">
+            <a href="https://t.me/SPY_RADIO_BOTZ" target="_blank" class="btn-nav">📱 Telegram Channel</a>
+            <button class="btn-nav" onclick="openAdminLogin()">👨‍💼 Admin Panel</button>
+            <button class="btn-nav" onclick="openMyAccount()">👤 My Account</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Premium Membership Plans</h1>
+            <p>Get instant access to exclusive content on Telegram</p>
+        </div>
+
+        <!-- Free Trial Section -->
+        <div class="free-trial">
+            <h3>🎁 Try Free for 3 Days</h3>
+            <p>No credit card required. Full access to premium content.</p>
+            <button class="btn-free-trial" onclick="startFreeTrial()">Start Free Trial</button>
+        </div>
+
+        <!-- Plans Grid -->
+        <div class="plans-container">
+            <!-- Plan 1: 1 Month -->
+            <div class="plan-card">
+                <div class="plan-name">1 Month</div>
+                <div class="plan-price">₹99</div>
+                <div class="plan-duration">30 Days Access</div>
+                <ul class="plan-features">
+                    <li>Full Premium Content Access</li>
+                    <li>Exclusive Audio Streams</li>
+                    <li>Commercial-Free Listening</li>
+                    <li>Mobile App Access</li>
+                    <li>Auto Renewal (Changeable)</li>
+                </ul>
+                <button class="btn-select" onclick="selectPlan('1 Month', 99)">Choose Plan</button>
+            </div>
+
+            <!-- Plan 2: 2 Months (Most Popular) -->
+            <div class="plan-card popular">
+                <div class="badge">MOST POPULAR</div>
+                <div class="plan-name">2 Months</div>
+                <div class="plan-price">₹179</div>
+                <div class="plan-duration">60 Days Access</div>
+                <ul class="plan-features">
+                    <li>Full Premium Content Access</li>
+                    <li>Exclusive Audio Streams</li>
+                    <li>Commercial-Free Listening</li>
+                    <li>Mobile App Access</li>
+                    <li>Priority Support</li>
+                    <li>Auto Renewal (Changeable)</li>
+                </ul>
+                <button class="btn-select" onclick="selectPlan('2 Months', 179)">Choose Plan</button>
+            </div>
+
+            <!-- Plan 3: 3 Months -->
+            <div class="plan-card">
+                <div class="plan-name">3 Months</div>
+                <div class="plan-price">₹249</div>
+                <div class="plan-duration">90 Days Access</div>
+                <ul class="plan-features">
+                    <li>Full Premium Content Access</li>
+                    <li>Exclusive Audio Streams</li>
+                    <li>Commercial-Free Listening</li>
+                    <li>Mobile App Access</li>
+                    <li>Priority Support</li>
+                    <li>Ad-Free Guaranteed</li>
+                    <li>Auto Renewal (Changeable)</li>
+                </ul>
+                <button class="btn-select" onclick="selectPlan('3 Months', 249)">Choose Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePaymentModal()">&times;</button>
+            <h2 id="planTitle"></h2>
+            <div class="demo-data">
+                <p><strong>📱 Demo Mobile Number:</strong> 9876543210</p>
+                <p><strong>🔐 Demo OTP:</strong> 1234</p>
+            </div>
+            <div class="form-group">
+                <label>Mobile Number (10 digits)</label>
+                <input type="tel" id="mobileInput" placeholder="Enter your mobile number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            </div>
+            <button class="btn-submit" onclick="verifyMobile()">Get OTP</button>
+            
+            <div class="otp-section" id="otpSection">
+                <div class="form-group">
+                    <label>Enter OTP</label>
+                    <input type="text" id="otpInput" placeholder="Enter 4-digit OTP" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+                <button class="btn-submit" onclick="verifyOTP()">Verify OTP</button>
+            </div>
+
+            <div id="paymentSection" style="display: none; margin-top: 20px;">
+                <div class="payment-amount" id="paymentAmount"></div>
+                <p style="color: #666; margin-bottom: 20px;">Click below to proceed with payment</p>
+                <button class="btn-submit" onclick="processPayment()">💳 Complete Payment</button>
+                <div class="success-message" id="successMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAdminLogin()">&times;</button>
+            <h2>Admin Panel Login</h2>
+            <div class="demo-data">
+                <p><strong>Username:</strong> admin</p>
+                <p><strong>Password:</strong> spy@123</p>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="adminUser" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="adminPass" placeholder="Enter password">
+            </div>
+            <button class="btn-submit" onclick="loginAdmin()">Login to Admin</button>
+        </div>
+    </div>
+
+    <!-- My Account Modal -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" onclick="closeMyAccount()">&times;</button>
+            <h2>My Account</h2>
+            <div id="accountContent">
+                <p style="text-align: center; color: #999;">No active membership. Please purchase a plan.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo Data Storage (Browser LocalStorage)
+        const demoDatabase = {
+            members: [],
+            payments: [],
+            logs: []
+        };
+
+        // Load from localStorage
+        function loadDemoData() {
+            const saved = localStorage.getItem('demoDatabase');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                Object.assign(demoDatabase, parsed);
+            }
+        }
+
+        // Save to localStorage
+        function saveDemoData() {
+            localStorage.setItem('demoDatabase', JSON.stringify(demoDatabase));
+        }
+
+        loadDemoData();
+
+        // Variables for current transaction
+        let selectedPlan = null;
+        let selectedPrice = null;
+        let verifiedMobile = null;
+
+        // Free Trial
+        function startFreeTrial() {
+            const mobile = prompt('📱 Enter your 10-digit mobile number:');
+            if (!mobile || mobile.length !== 10) {
+                alert('❌ Please enter a valid 10-digit mobile number');
+                return;
+            }
+
+            const existingMember = demoDatabase.members.find(m => m.mobile === mobile);
+            if (existingMember) {
+                alert('✅ Account already exists! Use My Account to check your plan.');
+                return;
+            }
+
+            const newMember = {
+                mobile: mobile,
+                planType: 'Free Trial',
+                planName: 'Free Trial - 3 Days',
+                price: 0,
+                startDate: new Date().toLocaleDateString(),
+                endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                status: 'active',
+                telegramLink: 'https://t.me/+ABC123XYZ_premium_channel',
+                paymentId: 'FREE_TRIAL_' + Date.now()
+            };
+
+            demoDatabase.members.push(newMember);
+            demoDatabase.logs.push({
+                timestamp: new Date().toLocaleString(),
+                action: 'Free Trial Started',
+                mobile: mobile,
+                details: 'User started 3-day free trial'
+            });
+
+            saveDemoData();
+
+            alert(`✅ Free Trial Activated!\n\n📱 Mobile: ${mobile}\n📅 Duration: 3 Days\n\n🔗 Telegram Channel Link:\n${newMember.telegramLink}\n\n⏰ Check "My Account" for details.`);
+        }
+
+        // Select Plan
+        function selectPlan(planName, price) {
+            selectedPlan = planName;
+            selectedPrice = price;
+            openPaymentModal(planName, price);
+        }
+
+        // Open Payment Modal
+        function openPaymentModal(planName, price) {
+            document.getElementById('planTitle').textContent = `💳 ${planName} - ₹${price}`;
+            document.getElementById('paymentModal').classList.add('show');
+            document.getElementById('otpSection').classList.remove('show');
+            document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('mobileInput').value = '';
+            document.getElementById('otpInput').value = '';
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('show');
+        }
+
+        // Verify Mobile
+        function verifyMobile() {
+            const mobile = document.getElementById('mobileInput').value;
+            if (!mobile || mobile.length !== 10) {
+                alert('❌ Please enter a valid 10-digit mobile number');
+                return;
+            }
+
+            const existingMember = demoDatabase.members.find(m => m.mobile === mobile);
+            if (existingMember && existingMember.status === 'active') {
+                alert('⚠️ This mobile number already has an active plan!');
+                return;
+            }
+
+            verifiedMobile = mobile;
+            demoDatabase.logs.push({
+                timestamp: new Date().toLocaleString(),
+                action: 'Mobile Verified',
+                mobile: mobile,
+                details: 'User entered mobile number'
+            });
+            saveDemoData();
+
+            alert('✅ OTP sent! (Demo: 1234)');
+            document.getElementById('otpSection').classList.add('show');
+        }
+
+        // Verify OTP
+        function verifyOTP() {
+            const otp = document.getElementById('otpInput').value;
+            if (otp !== '1234') {
+                alert('❌ Invalid OTP. Demo OTP: 1234');
+                return;
+            }
+
+            demoDatabase.logs.push({
+                timestamp: new Date().toLocaleString(),
+                action: 'OTP Verified',
+                mobile: verifiedMobile,
+                details: 'User entered correct OTP'
+            });
+            saveDemoData();
+
+            alert('✅ OTP Verified!');
+            document.getElementById('paymentSection').style.display = 'block';
+            document.getElementById('paymentAmount').textContent = `₹${selectedPrice}`;
+            document.getElementById('otpSection').classList.remove('show');
+        }
+
+        // Process Payment
+        function processPayment() {
+            // Simulate payment processing
+            alert('💳 Processing payment of ₹' + selectedPrice + '...\n\n⏳ Please wait...');
+
+            setTimeout(() => {
+                const planDuration = selectedPlan === '1 Month' ? 30 : selectedPlan === '2 Months' ? 60 : 90;
+                const startDate = new Date();
+                const endDate = new Date(startDate.getTime() + planDuration * 24 * 60 * 60 * 1000);
+
+                const newMember = {
+                    mobile: verifiedMobile,
+                    planType: selectedPlan,
+                    planName: selectedPlan,
+                    price: selectedPrice,
+                    startDate: startDate.toLocaleDateString(),
+                    endDate: endDate.toLocaleDateString(),
+                    status: 'active',
+                    telegramLink: 'https://t.me/+ABC123XYZ_premium_channel',
+                    paymentId: 'PAY_' + Date.now()
+                };
+
+                const existingIndex = demoDatabase.members.findIndex(m => m.mobile === verifiedMobile);
+                if (existingIndex !== -1) {
+                    demoDatabase.members[existingIndex] = newMember;
+                } else {
+                    demoDatabase.members.push(newMember);
+                }
+
+                demoDatabase.payments.push({
+                    timestamp: new Date().toLocaleString(),
+                    mobile: verifiedMobile,
+                    plan: selectedPlan,
+                    amount: selectedPrice,
+                    status: 'Success',
+                    paymentId: newMember.paymentId
+                });
+
+                demoDatabase.logs.push({
+                    timestamp: new Date().toLocaleString(),
+                    action: 'Payment Completed',
+                    mobile: verifiedMobile,
+                    details: `Payment of ₹${selectedPrice} successful for ${selectedPlan}`
+                });
+
+                saveDemoData();
+
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('successMessage').innerHTML = `
+                    ✅ Payment Successful!<br><br>
+                    <strong>Plan:</strong> ${selectedPlan}<br>
+                    <strong>Amount:</strong> ₹${selectedPrice}<br>
+                    <strong>Duration:</strong> ${planDuration} Days<br>
+                    <strong>Valid Till:</strong> ${newMember.endDate}<br><br>
+                    <strong>📱 Telegram Channel Link:</strong><br>
+                    <a href="${newMember.telegramLink}" target="_blank" style="color: #667eea; word-break: break-all;">${newMember.telegramLink}</a>
+                `;
+
+                setTimeout(() => {
+                    closePaymentModal();
+                    alert(`🎉 Welcome to Premium!\n\n🔗 Telegram Link Sent!\n\n📱 Check "My Account" for subscription details.`);
+                }, 2000);
+            }, 2000);
+        }
+
+        // Admin Panel
+        function openAdminLogin() {
+            document.getElementById('adminModal').classList.add('show');
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminModal').classList.remove('show');
+        }
+
+        function loginAdmin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+
+            if (user === 'admin' && pass === 'spy@123') {
+                closeAdminLogin();
+                window.open('admin.html', 'admin', 'width=1200,height=800');
+            } else {
+                alert('❌ Invalid credentials. Demo: admin / spy@123');
+            }
+        }
+
+        // My Account
+        function openMyAccount() {
+            const mobile = prompt('📱 Enter your mobile number to view account:');
+            if (!mobile) return;
+
+            const member = demoDatabase.members.find(m => m.mobile === mobile);
+            if (!member) {
+                alert('❌ No account found with this mobile number.');
+                return;
+            }
+
+            const accountContent = document.getElementById('accountContent');
+            const daysRemaining = Math.ceil((new Date(member.endDate) - new Date()) / (1000 * 60 * 60 * 24));
+
+            accountContent.innerHTML = `
+                <div style="background: #f0f4ff; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <p><strong>📱 Mobile:</strong> ${member.mobile}</p>
+                    <p><strong>📋 Plan:</strong> ${member.planName}</p>
+                    <p><strong>💰 Amount Paid:</strong> ₹${member.price}</p>
+                    <p><strong>📅 Start Date:</strong> ${member.startDate}</p>
+                    <p><strong>📅 Expiry Date:</strong> ${member.endDate}</p>
+                    <p><strong>⏳ Days Remaining:</strong> <span style="color: ${daysRemaining > 7 ? 'green' : 'red'}; font-weight: bold;">${Math.max(0, daysRemaining)} days</span></p>
+                    <p><strong>✅ Status:</strong> ${member.status.toUpperCase()}</p>
+                </div>
+                
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+                    <p><strong>🔗 Telegram Channel:</strong></p>
+                    <p><a href="${member.telegramLink}" target="_blank" style="color: #667eea; word-break: break-all;">${member.telegramLink}</a></p>
+                </div>
+
+                <button class="btn-submit" onclick="renewPlan('${member.mobile}')">🔄 Renew Subscription</button>
+            `;
+
+            document.getElementById('accountModal').classList.add('show');
+        }
+
+        function closeMyAccount() {
+            document.getElementById('accountModal').classList.remove('show');
+        }
+
+        function renewPlan(mobile) {
+            const member = demoDatabase.members.find(m => m.mobile === mobile);
+            if (!member) return;
+
+            alert('🔄 Renewing your subscription...\n\nYou will be redirected to payment.');
+            selectPlan(member.planType, member.price);
+        }
+    </script>
+</body>
+</html>
